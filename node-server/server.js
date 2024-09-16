@@ -7,13 +7,24 @@ const PORT = 3000;
 // Create a server
 const server = http.createServer((req, res) => {
   // Set the response
-    // res.statusCode = 200;
-    // res.setHeader('Content-Type', 'text/plain');
-  res.writeHead(200, { "Content-Type": "text/plain" });
+  // res.statusCode = 200;
+  // res.setHeader('Content-Type', 'text/plain');
+  // res.writeHead(200, { "Content-Type": "text/plain" });
 
   // Send a response message
   // what will be displyed
-  res.end("Hello, World!\n This is a server running on this port");
+  // res.end("Hello, World!\n This is a server running on this port");
+
+  ///////////////// Task 2 Code ///////////////////////
+  // Default routing on server runtime
+  if (req.url === "/" && req.method === "GET") {
+      // Set the response
+
+    res.writeHead(200);
+      // Send a response message
+  // what will be displyed on port http://localhost:3000/data
+    res.end(JSON.stringify({ message: "Welcome to Default Server! on runtime" }));
+  }
 });
 
 // listen on the specified port
