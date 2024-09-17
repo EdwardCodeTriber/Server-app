@@ -73,8 +73,7 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ message: "Invalid JSON format" }));
       }
       // pass info to the submit url
-      // curl -X POST http://localhost:3000/submit -H "Content-Type: application/json" -d '{"name":"John", "age":30}' '{"name": "Edward", "age":"44"}'
-
+      // curl -X POST http://localhost:3000/submit -H "Content-Type: application/json" -d '{"name": "Edward", "age":"44"}'
     });
   } else {
     // Handle invalid routes
