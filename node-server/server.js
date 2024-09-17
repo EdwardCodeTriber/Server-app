@@ -24,7 +24,9 @@ const server = http.createServer((req, res) => {
     // Send a response message
     // what will be displyed on port http://localhost:3000/data
     res.end(
-      JSON.stringify({ message: "Welcome to Default Server! on runtime http://localhost:3000/" })
+      JSON.stringify({
+        message: "Welcome to Default Server! on runtime http://localhost:3000/",
+      })
     );
   } else if (req.url === "/data" && req.method === "GET") {
     // Send a response message
@@ -39,10 +41,42 @@ const server = http.createServer((req, res) => {
     res.writeHead(200);
     res.end(
       JSON.stringify({
-        data: "Written on node as a GET route data on port http://localhost:3000/node",
+        data: "Written on node as a GET route data http://localhost:3000/node",
       })
     );
-  }  else {
+  } else if (req.url === "/submit" && req.method === "POST") {
+    let body = "";
+
+    // Collect the incoming data
+    req.on("data", (chunk) => {
+      // Convert Buffer to string
+      body += chunk.toString();
+    });
+
+    // When all data is received
+    req.on("end", () => {
+      // Try to parse the body as JSON
+      try {
+        const parsedData = JSON.parse(body);
+
+        // Respond with the parsed data
+        res.writeHead(200);
+        res.end(
+          JSON.stringify({
+            message: "Data received successfully!",
+            receivedData: parsedData,
+          })
+        );
+      } catch (error) {
+        // Handle invalid JSON
+        res.writeHead(400);
+        res.end(JSON.stringify({ message: "Invalid JSON format" }));
+      }
+      // pass info to the submit url
+      // curl -X POST http://localhost:3000/submit -H "Content-Type: application/json" -d '{"name":"John", "age":30}' '{"name": "Edward", "age":"44"}'
+
+    });
+  } else {
     // Handle invalid routes
     res.writeHead(404);
     res.end(JSON.stringify({ message: "Route not found or available" }));
